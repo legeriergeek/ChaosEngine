@@ -28,7 +28,7 @@ public class ShaderProgram {
 
         return(shader);
     }
-    // --- Constructeur ---
+    
     public ShaderProgram(String vertexPath, String fragmentPath) {
         CharSequence vertShaderSource = openShader("vertex.glsl");
         CharSequence fragShaderSource = openShader("fragment.glsl");
@@ -46,12 +46,10 @@ public class ShaderProgram {
         glDeleteShader(fragmentShader);
     }
 
-    // --- Activation du shader ---
     public void use() {
         glUseProgram(programId);
     }
 
-    // --- Setter d’uniforms (comme les matrices) ---
     public void setUniform(String name, Matrix4f value) {
         FloatBuffer fb = BufferUtils.createFloatBuffer(16);
         value.get(fb);
@@ -59,12 +57,10 @@ public class ShaderProgram {
         glUniformMatrix4fv(loc, false, fb);
     }
 
-    // --- Getter facultatif ---
     public int getId() {
         return programId;
     }
 
-    // --- Nettoyage ---
     public void cleanup() {
         glDeleteProgram(programId);
     }
