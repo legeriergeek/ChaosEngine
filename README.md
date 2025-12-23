@@ -81,12 +81,12 @@ To put an object on the screen you need to:
 * Declare a mesh.
 ### 1 - Shader
 * Declare it's Variable with `public static Texture yourTexture;`
-* In the `init()` function set up the Texture file you wanna use with `shader = new ShaderProgram("vertex.glsl", "fragment.glsl");`
+* In the `init()` function set up the Compute & Vertex shader with `shader = new ShaderProgram("vertex.glsl", "fragment.glsl");`
 * In the `render()` function, use the shader with `yourShader.use()`
 
 ### 2 - Texture
 * Declare it's Variable with `public static ShaderProgram yourShader;`
-* In the `init()` function set up the Compute & Vertex shader with `yourTexture = new Texture("file.jpg");`
+* In the `init()` function set up the Texture File with `yourTexture = new Texture("file.jpg");`
 
 ### 3 - Mesh
 * Declare it's Variable (`public static Mesh yourMesh;`)
