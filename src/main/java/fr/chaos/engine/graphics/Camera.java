@@ -4,8 +4,8 @@ import org.joml.Vector3f;
 
 public class Camera {
 
-    private Vector3f position;
-    private Vector3f rotation;
+    public Vector3f position;
+    public Vector3f rotation;
 
     private float fov;       
     private float aspect;    
@@ -25,7 +25,9 @@ public class Camera {
 
     public Matrix4f getViewMatrix(){
         return new Matrix4f()
-            .rotateXYZ(-rotation.x, -rotation.y, -rotation.z)
+            .rotateX((float) Math.toRadians(-rotation.x))
+            .rotateY((float) Math.toRadians(-rotation.y))
+            .rotateZ((float) Math.toRadians(-rotation.z))
             .translate(-position.x, -position.y, -position.z);
     }
 

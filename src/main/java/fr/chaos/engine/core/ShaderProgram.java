@@ -4,8 +4,9 @@ import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL20.*; 
@@ -14,21 +15,25 @@ public class ShaderProgram {
 
     private int programId; 
 
-    public static CharSequence openShader(String shaderName)
-    {
-        CharSequence shader = new StringBuffer("");
-        try (BufferedReader br = new BufferedReader(new FileReader("src/main/resources/" + shaderName))) {
+    public static CharSequence openShader(String shaderName) {
+        StringBuilder shader = new StringBuilder();
+        
+        try (InputStream is = ShaderProgram.class.getResourceAsStream("/" + shaderName);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is))) {
+            
             String line;
             while ((line = br.readLine()) != null) {
-                shader = new StringBuilder(shader + "\n" +line);
+                shader.append(line).append("\n");
             }
-        } catch (IOException e) {
-            System.out.println("Error reading file.");
+            
+        } catch (IOException | NullPointerException e) {
+            System.out.println("Error reading shader: " + shaderName);
+            e.printStackTrace();
         }
-
-        return(shader);
+        
+        return shader;
     }
-    
+    // --- Constructeur ---
     public ShaderProgram(String vertexPath, String fragmentPath) {
         CharSequence vertShaderSource = openShader("vertex.glsl");
         CharSequence fragShaderSource = openShader("fragment.glsl");
@@ -46,10 +51,12 @@ public class ShaderProgram {
         glDeleteShader(fragmentShader);
     }
 
+    // --- Activation du shader ---
     public void use() {
         glUseProgram(programId);
     }
 
+    // --- Setter d’uniforms (comme les matrices) ---
     public void setUniform(String name, Matrix4f value) {
         FloatBuffer fb = BufferUtils.createFloatBuffer(16);
         value.get(fb);
@@ -57,10 +64,12 @@ public class ShaderProgram {
         glUniformMatrix4fv(loc, false, fb);
     }
 
+    // --- Getter facultatif ---
     public int getId() {
         return programId;
     }
 
+    // --- Nettoyage ---
     public void cleanup() {
         glDeleteProgram(programId);
     }

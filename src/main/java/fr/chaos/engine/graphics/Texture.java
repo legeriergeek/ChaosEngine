@@ -18,9 +18,11 @@ import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.stb.STBImage;
 
-
+import java.io.File;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.nio.file.Files;
 
 public class Texture {
     private int id;
@@ -45,7 +47,14 @@ public class Texture {
         IntBuffer h = BufferUtils.createIntBuffer(1);
         IntBuffer c = BufferUtils.createIntBuffer(1);
 
-        ByteBuffer image = STBImage.stbi_load("src/main/resources/" + filePath, w, h, c, 4);
+        ByteBuffer image;
+        try {
+            File tmp = Files.createTempFile("tex", ".png").toFile(); tmp.deleteOnExit();
+            Files.copy(getClass().getClassLoader().getResourceAsStream(filePath), tmp.toPath(), java.nio.file.StandardCopyOption.REPLACE_EXISTING);
+            image = STBImage.stbi_load(tmp.getAbsolutePath(), w, h, c, 4);
+        } catch (IOException e) {
+            throw new RuntimeException("IO Exception while loading texture: " + e.getMessage(), e);
+        }
         
         if (image == null) {
             String error = STBImage.stbi_failure_reason();

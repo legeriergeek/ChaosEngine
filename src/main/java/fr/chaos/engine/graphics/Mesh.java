@@ -73,8 +73,8 @@ public class Mesh {
     private int vaoId;
     private int vboId;
     private int vertexCount;
-    private Vector3f position;
-    private Vector3f rotation;
+    public  Vector3f position;
+    public Vector3f rotation;
     private Vector3f scale;
     private Texture texture;
 
@@ -87,7 +87,7 @@ public class Mesh {
 
         FloatBuffer vertexBuffer = BufferUtils.createFloatBuffer(vertices.length);
         vertexBuffer.put(vertices).flip();
-        vertexCount = vertices.length / 3;
+        vertexCount = vertices.length / 5;
 
         glBufferData(GL_ARRAY_BUFFER, vertexBuffer, GL_STATIC_DRAW);
 
@@ -109,7 +109,7 @@ public class Mesh {
     public void draw() {
         texture.bind();
         glBindVertexArray(vaoId);
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        glDrawArrays(GL_TRIANGLES, 0, vertexCount);
         glBindVertexArray(0);
     }
 

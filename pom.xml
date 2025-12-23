@@ -1,8 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
+  
   <groupId>fr.chaos.engine</groupId>
   <artifactId>chaos-engine</artifactId>
   <version>1.0-SNAPSHOT</version>
@@ -11,63 +12,52 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <lwjgl.version>3.3.3</lwjgl.version>
-    <lwjgl.natives>natives-linux</lwjgl.natives>
+    <joml.version>1.10.5</joml.version>
   </properties>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.5.0</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals><goal>shade</goal></goals>
+            <configuration>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>fr.chaos.engine.core.Engine</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
   <dependencies>
-    <dependency>
-      <groupId>org.lwjgl</groupId>
-      <artifactId>lwjgl</artifactId>
-      <version>${lwjgl.version}</version>
-    </dependency>
-    <dependency>
-        <groupId>org.lwjgl</groupId>
-        <artifactId>lwjgl-stb</artifactId>
-        <version>3.3.3</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.lwjgl</groupId>
-      <artifactId>lwjgl</artifactId>
-      <version>${lwjgl.version}</version>
-      <classifier>${lwjgl.natives}</classifier>
-    </dependency>
-
-    <dependency>
-      <groupId>org.lwjgl</groupId>
-      <artifactId>lwjgl-glfw</artifactId>
-      <version>${lwjgl.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.lwjgl</groupId>
-      <artifactId>lwjgl-glfw</artifactId>
-      <version>${lwjgl.version}</version>
-      <classifier>${lwjgl.natives}</classifier>
-    </dependency>
-
-    <dependency>
-      <groupId>org.lwjgl</groupId>
-      <artifactId>lwjgl-opengl</artifactId>
-      <version>${lwjgl.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.lwjgl</groupId>
-      <artifactId>lwjgl-opengl</artifactId>
-      <version>${lwjgl.version}</version>
-      <classifier>${lwjgl.natives}</classifier>
-    </dependency>
-    <dependency>
-      <groupId>org.lwjgl</groupId>
-      <artifactId>lwjgl-stb</artifactId>
-      <version>3.3.3</version>
-      <classifier>natives-linux</classifier>
-  </dependency>
-    <dependency>
-      <groupId>org.joml</groupId>
-      <artifactId>joml</artifactId>
-      <version>1.10.5</version>
-    </dependency>
-
-  
+    <!-- Core (toutes plateformes) -->
+    <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl</artifactId><version>${lwjgl.version}</version></dependency>
+    <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-glfw</artifactId><version>${lwjgl.version}</version></dependency>
+    <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-stb</artifactId><version>${lwjgl.version}</version></dependency>
+    <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-opengl</artifactId><version>${lwjgl.version}</version></dependency>
+    
+    <!-- NATIVES LINUX + WINDOWS UNIQUEMENT -->
+    <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl</artifactId><version>${lwjgl.version}</version><classifier>natives-linux</classifier></dependency>
+    <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl</artifactId><version>${lwjgl.version}</version><classifier>natives-windows</classifier></dependency>
+    
+    <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-glfw</artifactId><version>${lwjgl.version}</version><classifier>natives-linux</classifier></dependency>
+    <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-glfw</artifactId><version>${lwjgl.version}</version><classifier>natives-windows</classifier></dependency>
+    
+    <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-stb</artifactId><version>${lwjgl.version}</version><classifier>natives-linux</classifier></dependency>
+    <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-stb</artifactId><version>${lwjgl.version}</version><classifier>natives-windows</classifier></dependency>
+    
+    <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-opengl</artifactId><version>${lwjgl.version}</version><classifier>natives-linux</classifier></dependency>
+    <dependency><groupId>org.lwjgl</groupId><artifactId>lwjgl-opengl</artifactId><version>${lwjgl.version}</version><classifier>natives-windows</classifier></dependency>
+    
+    <dependency><groupId>org.joml</groupId><artifactId>joml</artifactId><version>${joml.version}</version></dependency>
   </dependencies>
 </project>
