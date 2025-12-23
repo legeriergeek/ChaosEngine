@@ -8,7 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 
-// IS DEPRECATED, DO NOT USE UNLESS OF ShaderProgram BREAKDOWN!
+// This class is deprecated. Please don't use it. Or maybe do it, but at your own risks. 
 public class ShaderUtils{
     public static int vertexShader;
     public static int fragmentShader;
