@@ -12,7 +12,7 @@ Barebones 3D GameEngine made in Java using LWJGL
 * double click on the jar (or open your terminal and type `java -jar Chaos_Engine_0.X.jar`)
 
 **And to run the code yourself:**
-* Make sure you have maven installed
+* Make sure you have maven & a recent version (21+) of the JDK installed on your computer
 * run the command `mvn exec:java -e -Dexec.mainClass="fr.chaos.engine.core.Engine"` in your terminal, in the root folder of the project.
 
 ### How to code with it
