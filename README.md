@@ -10,6 +10,7 @@ Barebones 3D GameEngine made in Java using LWJGL
 * Download the jar of of the release tab
 * Ensure you have a recent version of java installed (Java 21+)
 * double click on the jar (or open your terminal and type `java -jar Chaos_Engine_0.X.jar`)
+Please note that the premade jar is only released for demonstration purposes only. Unless you like seeing a cube spinning this is not gonna be useful to you.
 
 **And to run the code yourself:**
 * Make sure you have maven & a recent version (21+) of the JDK installed on your computer
