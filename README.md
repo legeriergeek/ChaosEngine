@@ -2,8 +2,8 @@
 Barebones 3D GameEngine made in Java using LWJGL
 
 ### How to run?
-**You can go 2 ways:***
-* Run premade `.jar`s.
+**You can go 2 ways:**
+* Run the premade `.jar` file.
 * Download the Code and run it yourself
 
 **For the downloading `.jar` file, here's how you shall proceed:**
