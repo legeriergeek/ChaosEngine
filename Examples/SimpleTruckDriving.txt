@@ -1,3 +1,6 @@
+//SIMPLE TRUCK/CAR DRIVING EXAMPLE - 2025, legeriergeek
+//This makes use of the CarController prefab_behavior
+
 package fr.chaos.engine.core;
 
 import static org.lwjgl.glfw.GLFW.*;

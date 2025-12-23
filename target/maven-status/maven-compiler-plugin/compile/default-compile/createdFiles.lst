@@ -1,7 +1,7 @@
 fr/chaos/engine/graphics/Camera.class
-fr/chaos/engine/core/ShaderProgram.class
 fr/chaos/engine/core/Renderer.class
-fr/chaos/engine/depreciated/ShaderUtils.class
 fr/chaos/engine/graphics/Texture.class
+fr/chaos/engine/core/ShaderProgram.class
+fr/chaos/engine/depreciated/ShaderUtils.class
 fr/chaos/engine/core/Engine.class
 fr/chaos/engine/graphics/Mesh.class
