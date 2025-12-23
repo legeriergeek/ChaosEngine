@@ -25,9 +25,6 @@ The place you are excepted to write your code (when making "games" with the engi
 First, let's take look at a simple example of code (the one provided already in core/Renderer by default). It shows a great usage of most of the features of this engine.
 
 ```java
-//100K Cubes - 2025 legeriergeek
-//Spawns 100k cubes by default. Warning: gets pretty laggy. You can reduce the number of cubes by changing the "cubeNumber" variable.
-
 package fr.chaos.engine.core;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
@@ -51,7 +48,6 @@ public class Renderer{
     public static Mesh cube;
     public static Camera camera;
     public static Texture texture1;
-    public static int cubeNumber = 100000;
     public static void init(){    
         shader = new ShaderProgram("vertex.glsl", "fragment.glsl");
         texture1 = new Texture("unportalable.jpg");
@@ -80,9 +76,28 @@ public class Renderer{
 ```
 I think this is pretty straight forward but i'll explain it anyways.\
 To put an object on the screen you need to:
-* Declare it's Variable (`public static Mesh cube;`)
+* Declare a Shader
+* Declare a Texture
+* Declare a mesh.
+### 1 - Shader
+* Declare it's Variable with `public static Texture yourTexture;`
+* In the `init()` function set up the Texture file you wanna use with `shader = new ShaderProgram("vertex.glsl", "fragment.glsl");`
+* In the `render()` function, use the shader with `yourShader.use()`
+
+### 2 - Texture
+* Declare it's Variable with `public static ShaderProgram yourShader;`
+* In the `init()` function set up the Compute & Vertex shader with `yourTexture = new Texture("file.jpg");`
+
+### 3 - Mesh
+* Declare it's Variable (`public static Mesh yourMesh;`)
 * In the `init()` function, set all it's parameters, which come in this order: Mesh
-* * Mesh: You can either use the inculded `Mesh.cubeVertices`, which will make a cube, or use `OBJLoader.load("file.obj")` (import `fr.chaos.engine.utils.OBJLoader`) to load a `.obj` model
+* * Mesh: You can either use the inculded `Mesh.cubeVertices`, which will make a cube, or use `OBJLoader.load("file.obj");` (import `fr.chaos.engine.utils.OBJLoader`) to load a `.obj` model
 * * Position, in a Vector3f. It uses OpenGL default units.
 * * Rotation, in a Vector3f. Supply angles in degrees.
 * * Scale, in a Vector3f. It uses OpenGL default units.
+* * Texture.
+* In `render()`, bind the texture supplied when you created the mesh with `yourTexture.bind();`
+* Set up the shader uniform correctly with `shader.setUniform("model", yourMesh.getModelMatrix());`
+* And finally, render the mesh with `yourmesh.draw()`
+
+Also, you need to put `glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);` and `glEnable(GL_DEPTH_TEST);` in the `render()` function.
