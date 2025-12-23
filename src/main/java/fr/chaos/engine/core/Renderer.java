@@ -23,7 +23,6 @@ public class Renderer{
     public static Mesh cube;
     public static Camera camera;
     public static Texture texture1;
-    public static int cubeNumber = 100000;
     public static void init(){    
         shader = new ShaderProgram("vertex.glsl", "fragment.glsl");
         texture1 = new Texture("unportalable.jpg");
