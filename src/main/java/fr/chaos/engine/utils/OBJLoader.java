@@ -27,11 +27,6 @@ public class OBJLoader {
         for (int i = 0; i < faces.size(); i++) {
             mesh[i] = faces.get(i);
         }
-        System.out.println("=== OBJ Loaded: " + path + " ===");
-        System.out.println("Vertices: " + (vertices.size() / 3));
-        System.out.println("UVs: " + (uvs.size() / 2));
-        System.out.println("Triangles: " + (faces.size() / 15)); // 3 verts * 5 floats
-        System.out.println("Total floats: " + mesh.length);
         return mesh;
     }
 
