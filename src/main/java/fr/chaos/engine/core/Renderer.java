@@ -1,83 +1,51 @@
-//SIMPLE TRUCK/CAR DRIVING EXAMPLE - 2025, legeriergeek
-//This makes use of the CarController prefab_behavior
+//Default Scene
 
 package fr.chaos.engine.core;
 
-import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_DEPTH_TEST;
 import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glEnable;
 
+import static org.lwjgl.glfw.GLFW.*;
+
 import org.joml.Vector3f;
 
 import fr.chaos.engine.graphics.Mesh;
 import fr.chaos.engine.graphics.Camera;
 import fr.chaos.engine.graphics.Texture;
-import fr.chaos.engine.utils.OBJLoader;
-import fr.chaos.engine.prefab_behavior.CarController;
+import java.util.ArrayList;
+import java.util.Random;
 
 public class Renderer{
     public static ShaderProgram shader;
     public static Mesh cube;
-    public static Mesh Truck;
     public static Camera camera;
-    public static Texture texture;
-    public static Texture texture2;
-    public static Texture texture3;
-    public static float[] truckModel;
-    public static CarController car = new CarController();
-    
+    public static Texture texture1;
+    public static int cubeNumber = 100000;
     public static void init(){    
-        OBJLoader loader = new OBJLoader();
         shader = new ShaderProgram("vertex.glsl", "fragment.glsl");
-        texture2 = new Texture("unportalable.jpg");
-        texture3 = new Texture("tex.png");
-        cube = new Mesh(Mesh.cubeVertices, new Vector3f(0, -3f, 0), new Vector3f(0f, 0f, 0f), new Vector3f(100f, 0.5f, 100f), texture2);
-        truckModel = loader.load("Sunrise_w2.obj");
-        Truck = new Mesh(truckModel, new Vector3f(0, 0f, 0), new Vector3f(0f, 0f, 0f), new Vector3f(0.03f, 0.03f, 0.03f), texture3);
-        camera = new Camera(new Vector3f(0f, 0f, -3), new Vector3f(0f,-3f,0f), 70, (float) Engine.windowWidth/Engine.windowHeight, 0.1f, 100f);
+        texture1 = new Texture("unportalable.jpg");
+        Random r = new Random();
+        cube = new Mesh(Mesh.cubeVertices, new Vector3f(-5 + r.nextFloat() * (5 - -5), -2 + r.nextFloat() * (5 - -5), -5 + r.nextFloat() * (5 - -5)), new Vector3f(0f, 0f, 0f), new Vector3f(0.5f, 0.5f, 0.5f), texture1);
+        camera = new Camera(new Vector3f(0f, 0f, 3), new Vector3f(0f,0f,0f), 70, (float) Engine.windowWidth/Engine.windowHeight, 0.1f, 100f);
     }
     
     public static void render(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glEnable(GL_DEPTH_TEST);
         shader.use();
-        texture2.bind();
-        texture3.bind();
+        texture1.bind();
         shader.setUniform("view", camera.getViewMatrix());
         shader.setUniform("projection", camera.getProjectionMatrix());
         shader.setUniform("model", cube.getModelMatrix());
         cube.draw();
-        shader.setUniform("model", Truck.getModelMatrix());
-        Truck.draw();
     }
 
     public static void update(long window) {
-        car.inputForward = 0;
-        car.inputTurn = 0;
-        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) car.inputForward = 1;
-        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) car.inputForward = -1;
-        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) car.inputTurn = 1;  
-        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) car.inputTurn = -1;
-
-        car.update(0.016f);
-
-        Truck.position = new Vector3f(car.position);
-        
-        Truck.rotation = new Vector3f(0, (float)Math.toRadians(car.rotationY), 0); 
-        
-        float yawRad = (float) Math.toRadians(car.rotationY);
-        float distance = -4.3f;
-        
-        camera.setPosition(new Vector3f(
-            car.position.x + (float)Math.sin(yawRad) * distance,
-            car.position.y + 1.5f,
-            car.position.z + (float)Math.cos(yawRad) * distance
-        ));
-
-        camera.setRotation(new Vector3f(-20f, car.rotationY + 180, 0f));
+        float deltaTime = 0.016f;
+        cube.rotation = new Vector3f(cube.rotation.x + 1f * deltaTime, cube.rotation.y + 1f * deltaTime, cube.rotation.z + 1f * deltaTime);
     }
 
 }
