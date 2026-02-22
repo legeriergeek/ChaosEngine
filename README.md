@@ -91,10 +91,10 @@ To put an object on the screen you need to:
 ### 3 - Mesh
 * Declare it's Variable (`public static Mesh yourMesh;`)
 * In the `init()` function, set all it's parameters, which come in this order: Mesh
-* * Mesh: You can either use the inculded `Mesh.cubeVertices`, which will make a cube, or use `OBJLoader.load("file.obj");` (import `fr.chaos.engine.utils.OBJLoader`) to load a `.obj` model
-* * Position, in a Vector3f. It uses OpenGL default units.
-* * Rotation, in a Vector3f. Supply angles in degrees.
-* * Scale, in a Vector3f. It uses OpenGL default units.
+    * Mesh: You can either use the inculded `Mesh.cubeVertices`, which will make a cube, or use `OBJLoader.load("file.obj");` (import `fr.chaos.engine.utils.OBJLoader`) to load a `.obj` model
+    * Position, in a Vector3f. It uses OpenGL default units.
+    * Rotation, in a Vector3f. Supply angles in degrees.
+    * Scale, in a Vector3f. It uses OpenGL default units.
 * * Texture.
 * In `render()`, bind the texture supplied when you created the mesh with `yourTexture.bind();`
 * Set up the shader uniform correctly with `shader.setUniform("model", yourMesh.getModelMatrix());`
