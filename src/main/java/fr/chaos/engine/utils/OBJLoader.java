@@ -21,6 +21,9 @@ public class OBJLoader {
 
     // === Point d’entrée principal ===
     public float[] load(String path) {
+        vertices.clear();
+        uvs.clear();
+        faces.clear();
         StringBuilder model = openModel(path);
         parser(model);
         float[] mesh = new float[faces.size()];
@@ -35,7 +38,7 @@ public class OBJLoader {
         String[] lines = model.toString().split("\n");
         for(int i = 0; i < lines.length; i++){
             if(lines[i].startsWith("#") || lines[i].isEmpty()){
-                System.out.println("Comment/Empty Line");
+                //System.out.println("Comment/Empty Line");
             } else if (lines[i].startsWith("v ")){
                 //System.out.println("Vertex");
                 parseVertex(lines[i]);

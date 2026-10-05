@@ -1,6 +1,7 @@
 package fr.chaos.engine.core;
 
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 
 import java.io.BufferedReader;
@@ -35,8 +36,8 @@ public class ShaderProgram {
     }
     // --- Constructeur ---
     public ShaderProgram(String vertexPath, String fragmentPath) {
-        CharSequence vertShaderSource = openShader("vertex.glsl");
-        CharSequence fragShaderSource = openShader("fragment.glsl");
+        CharSequence vertShaderSource = openShader(vertexPath);
+        CharSequence fragShaderSource = openShader(fragmentPath);
         int vertexShader = glCreateShader(GL_VERTEX_SHADER);
         glShaderSource(vertexShader, vertShaderSource);
         glCompileShader(vertexShader);
@@ -63,7 +64,14 @@ public class ShaderProgram {
         int loc = glGetUniformLocation(programId, name);
         glUniformMatrix4fv(loc, false, fb);
     }
-
+    public void setUniformV3f(String name, Vector3f value) {
+        int loc = glGetUniformLocation(programId, name);
+        glUniform3f(loc, value.x, value.y, value.z);
+    }
+    public void setUniformFloat(String name, float value){
+        int loc = glGetUniformLocation(programId, name);
+        glUniform1f(loc, value);
+    }
     // --- Getter facultatif ---
     public int getId() {
         return programId;
