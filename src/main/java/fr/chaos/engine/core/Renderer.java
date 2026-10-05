@@ -1,6 +1,3 @@
-//SIMPLE TRUCK/CAR DRIVING EXAMPLE - 2025, legeriergeek
-//This makes use of the CarController prefab_behavior
-
 package fr.chaos.engine.core;
 
 import static org.lwjgl.glfw.GLFW.GLFW_CURSOR;
@@ -45,7 +42,6 @@ public class Renderer{
     public static Camera camera;
     public static Texture texture;
     public static Texture texture2;
-    public static Texture texture3;
     public static Texture skyboxTexture;
     public static Light light;
     public static float[] truckModel;
@@ -57,7 +53,6 @@ public class Renderer{
         shader = new ShaderProgram("vertex.glsl", "fragment.glsl");
         unlitShader = new ShaderProgram("vertex.glsl", "unlit_frag.glsl");
         texture2 = new Texture("unportalable.jpg");
-        texture3 = new Texture("rbx.png");
         skyboxTexture = new Texture("skybox.jpg");
         cube = new Mesh(Mesh.cubeVertices, new Vector3f(0, -3f, 0), new Vector3f(0f, 0f, 0f), new Vector3f(10f, 0.5f, 10f), texture2);
         cubeFollowingLight = new Mesh(Mesh.cubeVertices, new Vector3f(0f, 0f, 0f), new Vector3f(0f, 0f, 0f), new Vector3f(1f, 1f, 1f), texture2);
@@ -75,7 +70,6 @@ public class Renderer{
         
         RenderWithShader.InitShader(shader, camera);
         texture2.bind();
-        texture3.bind();
         shader.setUniformV3f("lightPos", light.position);
         shader.setUniformFloat("intensity", 10.0f);
         shader.setUniformFloat("spread", 0.1f);
@@ -115,6 +109,7 @@ public class Renderer{
         Vector3f pos = camera.getPosition();
         Vector3f rot = camera.getRotation(); 
 
+        //yes the character controller is vibecoded. i have no want to code that LMFAO
         boolean rmbDown = glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS; 
         if (rmbDown) {
             glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED); 
@@ -142,7 +137,7 @@ public class Renderer{
         }
         rmbWasDown = rmbDown;
 
-        Matrix4f view = camera.getViewMatrix(); // ta view matrix (avec -rot et -pos)
+        Matrix4f view = camera.getViewMatrix(); 
 
         Vector3f right   = new Vector3f(view.m00(), view.m10(), view.m20()).normalize();
         Vector3f forward = new Vector3f(-view.m02(), -view.m12(), -view.m22()).normalize();
